@@ -21,10 +21,13 @@ npm install --save vue-mermaid
 
 ```js
 import VueMermaid from 'vue-mermaid'
+Vue.use(VueMermaid)
+```
+
+### use component
+
+```js
 export default {
-  components: {
-      VueMermaid
-    },
   data:function(){
     return {
       data:[
