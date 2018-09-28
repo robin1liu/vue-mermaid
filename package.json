@@ -1,12 +1,19 @@
 {
   "name": "vue-mermaid",
   "description": "flowchart of mermaid with vue componet",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "author": "mark_tun <yuguang.liu@foxmail.com>",
   "license": "MIT",
-  "private": true,
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/robin1liu/vue-mermaid.git"
   },
   "dependencies": {
     "mermaid": "^8.0.0-rc.8",

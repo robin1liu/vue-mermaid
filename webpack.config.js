@@ -8,8 +8,11 @@ module.exports = {
     publicPath: '/dist/',
     filename: 'vue-mermaid.js',
     library: 'VueMermaid',
-    libraryTarget: 'umd',
-    umdNamedDefine: true 
+    libraryTarget: 'amd'
+  },
+  externals: {
+    vue: 'vue',
+    mermaid:'mermaid'
   },
   module: {
     rules: [
