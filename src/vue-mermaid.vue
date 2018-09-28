@@ -65,7 +65,6 @@ export default {
                     `;
         }
       }).join('\n');
-      console.log(this.code);
     },
     setNodes(data) {
       if (data === null || typeof data === "undefined") return;
