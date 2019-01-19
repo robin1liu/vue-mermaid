@@ -29,7 +29,14 @@ export default {
     return {
       mermaidNode: [],
       code: '',
-      nodeObject:{}
+      nodeObject:{},
+      edges:[
+        {type: 'default', open: '[', close: ']'},
+        {type: 'round', open: '(', close: ')'},
+        {type: 'circle', open: '((', close: '))'},
+        {type: 'asymetric', open: '>', close: ']'},
+        {type: 'rhombus', open: '{', close: '}'}
+      ]
     };
   },
   mounted() {
@@ -52,19 +59,26 @@ export default {
           return item.next.map(n => {
             const next = this.nodeObject[n];
             if (next != null && typeof next != "undefined") {
-              return `${item.id}(${item.text})-->${next.id}(${next.text})`;
+                return `${this.buildNode(item)}${this.buildLink(item)}${this.buildNode(next)}`
             } else {
               //TODO error
-              return `${item.id}(${item.text})`;
+              return `${this.buildNode(item)}`;
             }
           }).join('\n');
           
         } else {
-            return `${item.id}(${item.text})
+            return `${this.buildNode(item)}
                     click ${item.id} clickTest
                     `;
         }
       }).join('\n');
+    },
+    buildNode(item){
+      let edge = !item.edgeType ? this.edges.find(e => {return e.type === 'default'}) : this.edges.find(e => {return e.type === item.edgeType});
+      return `${item.id}${edge.open}${item.text}${edge.close}`
+    },
+    buildLink(item){
+      return item.link ? item.link : '-->';
     },
     setNodes(data) {
       if (data === null || typeof data === "undefined") return;

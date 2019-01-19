@@ -17,24 +17,24 @@ npm install --save vue-mermaid
 
 ## Usage
 
-### register component
+### Register component
 
 ```js
 import VueMermaid from 'vue-mermaid'
 Vue.use(VueMermaid)
 ```
 
-### use component
+### Use component
 
 ```js
 export default {
   data:function(){
     return {
       data:[
-        {id:'1',text:'A',next:['2']},
-        {id:'2',text:'B',next:['3']},
+        {id:'1',text:'A',link:'---',next:['2']},
+        {id:'2',text:'B',edgeType:'circle',next:['3']},
         {id:'3',text:'C',next:['4','6']},
-        {id:'4',text:'D',next:['5']},
+        {id:'4',text:'D',link:'-- This is the text ---',next:['5']},
         {id:'5',text:'E'},
         {id:'6',text:'F'}
       ]
@@ -42,18 +42,21 @@ export default {
   }
 }
 ```
+#### Possible edgeType values:
+![edge.default](./img/edge_types.png)
 
-### template
+
+### Template
 
 ```vue
 <template>
-  <vue-mermaid :nodes="data"></vue-mermaid>
+  <vue-mermaid :nodes="data" type="graph LR"></vue-mermaid>
 </template>
 ```
 
-### result
+### Result
 
-![Flowchart](./img/flow.jpg)
+![Flowchart](./img/flow.png)
 
 ## Build Setup
 
