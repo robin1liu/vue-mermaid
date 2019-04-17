@@ -1,6 +1,6 @@
 <template>
   <div id='mermaid' class="mermaid">
-    {{code}}
+    {{parseCode}}
   </div>
 </template>
 
@@ -18,6 +18,12 @@ export default {
       type: Array,
       required: true
     },
+    styles: {
+      type: Array,
+      default() {
+        return [];
+      }
+    },
     config: {
       type: Object,
       default() {
@@ -25,34 +31,25 @@ export default {
       }
     }
   },
-  data: function() {
-    return {
-      mermaidNode: [],
-      code: '',
-      nodeObject:{}
-    };
-  },
   mounted() {
     this.init();
-    if (Array.isArray(this.nodes)) {
-      this.mermaidNode = this.nodes;
-      this.parseCode();
-      this.load();
-    }
+    this.loadNodes();
   },
-  methods: {
-    parseCode() {
-      const arrayToObject = (arr, keyField) =>
+  computed:{
+    parseCode(){
+      const {nodes, styles} = this;
+      if (Array.isArray(nodes) && nodes.length > 0) {
+        const arrayToObject = (arr, keyField) =>
         Object.assign({}, ...arr.map(item => ({ [item[keyField]]: item })));
-      this.nodeObject = arrayToObject(this.mermaidNode, "id");
+      const nodeObject = arrayToObject(nodes, "id");
       const parseCode = this.type + '\n';
-      this.code = parseCode + this.mermaidNode.map(item => {
-        const eventTml = `click ${item.id} clickTest`;
+      const code = parseCode + nodes.map(item => {
         if (item.next && item.next.length > 0) {
           return item.next.map(n => {
-            const next = this.nodeObject[n];
+            const next = nodeObject[n] || nodeObject[n.id];
             if (next != null && typeof next != "undefined") {
-              return `${item.id}(${item.text})-->${next.id}(${next.text})`;
+              const link = n.link? '|'+n.link+'|':'';
+              return `${item.id}(${item.text})-->${link}${next.id}(${next.text})`;
             } else {
               //TODO error
               return `${item.id}(${item.text})`;
@@ -60,35 +57,43 @@ export default {
           }).join('\n');
           
         } else {
-            return `${item.id}(${item.text})
-                    click ${item.id} clickTest
-                    `;
+            return `${item.id}(${item.text})`;
         }
+      }).join('\n')
+      + '\n'
+      + styles.join(' \n')
+      + '\n'
+      +nodes.filter(item => item.editable).map(item => {
+        return `click ${item.id} mermaidClick "edit"`;
       }).join('\n');
-    },
-    setNodes(data) {
-      if (data === null || typeof data === "undefined") return;
-      if (Array.isArray(data)) {
-        this.mermaidNode = data;
-        return;
+      this.load(code);
+      return code;
+      } else {
+        return '';
       }
+    }
+  },
+  methods: {
+    loadNodes() {
+     this.load(this.parseCode);
     },
     init() {
       const _t = this;
-      window.clickTest = function (id) {
+      window.mermaidClick = function (id) {
         _t.edit(id);
       }
-      mermaid.initialize(_t.config);
+      mermaid.initialize(this.config);
     },
-    load() {
-      var container = document.getElementById("mermaid");
-      container.removeAttribute("data-processed");
-      container.replaceChild(document.createTextNode(this.code), container.firstChild);
-      mermaid.init(undefined, container);
+    load(code) {
+      if(code) {
+        var container = document.getElementById("mermaid");
+        container.removeAttribute("data-processed");
+        container.replaceChild(document.createTextNode(code), container.firstChild);
+        mermaid.init(code, container);
+      }
     },
     edit(id){
-      console.log(this.nodeObject[id]);
-      this.$emit('nodeClick', this.nodeObject[id])
+      this.$emit('nodeClick', id)
     }
   }
 };
