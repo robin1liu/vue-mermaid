@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.0.8
+
+- Add node style support
+
 ## 0.0.7
 
 - Change mermaid version to 8.0.0

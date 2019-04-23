@@ -9,7 +9,7 @@
 
 ## Install Setup
 
-``` bash
+```bash
 # install dependencies
 npm install --save vue-mermaid
 
@@ -20,42 +20,54 @@ npm install --save vue-mermaid
 ### Register component
 
 ```js
-import VueMermaid from 'vue-mermaid'
-Vue.use(VueMermaid)
+import VueMermaid from "vue-mermaid";
+Vue.use(VueMermaid);
 ```
 
 ### Use component
 
 ```js
 export default {
-  data:function(){
+  data: function() {
     return {
-      data:[
-        {id:'1',text:'A',link:'---',next:['2'],editable:true},
-        {id:'2',text:'B',edgeType:'circle',next:['3']},
-        {id:'3',text:'C',next:['4','6']},
-        {id:'4',text:'D',link:'-- This is the text ---',next:['5']},
-        {id:'5',text:'E'},
-        {id:'6',text:'F'}
+      data: [
+        {
+          id: "1",
+          text: "A",
+          link: "---",
+          next: ["2"],
+          editable: true,
+          style: "fill:#f9f,stroke:#333,stroke-width:4px"
+        },
+        { id: "2", text: "B", edgeType: "circle", next: ["3"] },
+        { id: "3", text: "C", next: ["4", "6"] },
+        { id: "4", text: "D", link: "-- This is the text ---", next: ["5"] },
+        { id: "5", text: "E" },
+        { id: "6", text: "F" }
       ]
-    }
+    };
   },
-  methods:{
+  methods: {
     editNode(nodeId) {
-     alert(nodeId);
-    },
+      alert(nodeId);
+    }
   }
-}
+};
 ```
-#### Possible edgeType values:
-![edge.default](./img/edge_types.png)
 
+#### Possible edgeType values:
+
+![edge.default](./img/edge_types.png)
 
 ### Template
 
 ```vue
 <template>
-  <vue-mermaid :nodes="data" type="graph LR" @nodeClick="editNode"></vue-mermaid>
+  <vue-mermaid
+    :nodes="data"
+    type="graph LR"
+    @nodeClick="editNode"
+  ></vue-mermaid>
 </template>
 ```
 
@@ -65,7 +77,7 @@ export default {
 
 ## Build Setup
 
-``` bash
+```bash
 # install dependencies
 npm install
 

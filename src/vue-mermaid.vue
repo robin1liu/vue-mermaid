@@ -54,8 +54,15 @@ export default {
         return {};
       }
     },
-    parseCode() {
+    customStyle() {
       const { nodes, styles } = this;
+      const nodeStyles = nodes
+        .filter(node => node.style)
+        .map(node => `style ${node.id} ${node.style}`);
+      return nodeStyles.concat(styles);
+    },
+    parseCode() {
+      const { nodes } = this;
       if (Array.isArray(nodes) && nodes.length > 0) {
         const parseCode = this.type + "\n";
         const code =
@@ -84,12 +91,12 @@ export default {
             })
             .join("\n") +
           "\n" +
-          styles.join(" \n") +
+          this.customStyle.join(" \n") +
           "\n" +
           nodes
             .filter(item => item.editable)
             .map(item => {
-              return `click ${item.id} mermaidClick "edit"`;
+              return `click ${item.id} mermaidClick`;
             })
             .join("\n");
         this.load(code);
