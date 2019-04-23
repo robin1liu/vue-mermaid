@@ -126,12 +126,14 @@ export default {
     load(code) {
       if (code) {
         var container = document.getElementById("mermaid");
-        container.removeAttribute("data-processed");
-        container.replaceChild(
-          document.createTextNode(code),
-          container.firstChild
-        );
-        mermaid.init(code, container);
+        if (container) {
+          container.removeAttribute("data-processed");
+          container.replaceChild(
+            document.createTextNode(code),
+            container.firstChild
+          );
+          mermaid.init(code, container);
+        }
       }
     },
     edit(id) {
