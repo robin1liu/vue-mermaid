@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### 0.0.9
+
+- Add subgraphs support
+
 ## 0.0.8
 
 - Add node style support

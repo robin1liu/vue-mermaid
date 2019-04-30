@@ -75,6 +75,39 @@ export default {
 
 ![Flowchart](./img/flow.png)
 
+### Group Type
+
+```js
+export default {
+  data: function() {
+    return {
+      data: [
+        {
+          id: "1",
+          text: "A",
+          link: "---",
+          next: ["2"],
+          group: "one"
+        },
+        { id: "2", text: "B", edgeType: "circle", next: ["3"], group: "one" },
+        { id: "3", text: "C", next: ["4", "6"], group: "two" },
+        {
+          id: "4",
+          text: "D",
+          link: "-- This is the text ---",
+          next: ["5"],
+          group: "two"
+        },
+        { id: "5", text: "E", group: "three" },
+        { id: "6", text: "F", group: "three" }
+      ]
+    };
+  }
+};
+```
+
+![Group](./img/group.png)
+
 ## Build Setup
 
 ```bash

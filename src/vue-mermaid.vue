@@ -65,41 +65,10 @@ export default {
       const { nodes } = this;
       if (Array.isArray(nodes) && nodes.length > 0) {
         const parseCode = this.type + "\n";
-        const code =
-          parseCode +
-          nodes
-            .map(item => {
-              if (item.next && item.next.length > 0) {
-                return item.next
-                  .map(n => {
-                    const next = this.nodeObject[n] || this.nodeObject[n.id];
-                    if (next != null && typeof next != "undefined") {
-                      return `${this.buildNode(item)}${this.buildLink(
-                        item
-                      )}${this.buildNode(next)}`;
-                    } else {
-                      //TODO error
-                      return `${this.buildNode(item)}`;
-                    }
-                  })
-                  .join("\n");
-              } else {
-                return `${this.buildNode(item)}
-                    click ${item.id} clickTest
-                    `;
-              }
-            })
-            .join("\n") +
-          "\n" +
-          this.customStyle.join(" \n") +
-          "\n" +
-          nodes
-            .filter(item => item.editable)
-            .map(item => {
-              return `click ${item.id} mermaidClick`;
-            })
-            .join("\n");
+        const groupNodes = this.getGroupNodes(nodes);
+        const code = parseCode + groupNodes + this.customStyle.join(" \n");
         this.load(code);
+        console.log(code);
         return code;
       } else {
         return "";
@@ -107,6 +76,93 @@ export default {
     }
   },
   methods: {
+    getGroupNodes(nodes) {
+      const innerMap = new Map();
+      nodes.forEach(element => {
+        const group = element.group || "";
+        const data = innerMap.get(group) || { nids: new Set(), narr: [] };
+        data.nids.add(element.id);
+        data.narr.push(element);
+        innerMap.set(group, data);
+      });
+      return [...innerMap.entries()]
+        .map(item => {
+          const [groupName, entry] = item;
+          const { nids, narr } = entry;
+          if (groupName !== "") {
+            const innerNodes = [];
+            const outNodes = [];
+            narr.forEach(node => {
+              if (node.next) {
+                innerNodes.push({
+                  id: node.id,
+                  text: node.text,
+                  style: node.style
+                });
+                node.next.forEach(id => {
+                  if (nids.has(id)) {
+                    innerNodes.push({
+                      id: node.id,
+                      text: node.text,
+                      link: node.link,
+                      next: [id]
+                    });
+                  } else {
+                    outNodes.push({
+                      id: node.id,
+                      text: node.text,
+                      link: node.link,
+                      next: [id]
+                    });
+                  }
+                });
+              } else {
+                innerNodes.push(node);
+              }
+            });
+            const innerNodesStr = this.buildNodesStr(innerNodes);
+            const outNodeStr = this.buildNodesStr(outNodes);
+            return `subgraph ${groupName} \n ${innerNodesStr} end \n ${outNodeStr}`;
+          } else {
+            const nodesStr = this.buildNodesStr(narr);
+            return nodesStr;
+          }
+        })
+        .join(" \n");
+    },
+    buildNodesStr(nodes) {
+      return (
+        nodes
+          .map(item => {
+            if (item.next && item.next.length > 0) {
+              return item.next
+                .map(n => {
+                  const next = this.nodeObject[n] || this.nodeObject[n.id];
+                  if (next != null && typeof next != "undefined") {
+                    return `${this.buildNode(item)}${this.buildLink(
+                      item
+                    )}${this.buildNode(next)}`;
+                  } else {
+                    //TODO error
+                    return `${this.buildNode(item)}`;
+                  }
+                })
+                .join("\n");
+            } else {
+              return `${this.buildNode(item)}`;
+            }
+          })
+          .join("\n") +
+        "\n" +
+        nodes
+          .filter(item => item.editable)
+          .map(item => {
+            return `click ${item.id} mermaidClick`;
+          })
+          .join("\n") +
+        "\n"
+      );
+    },
     buildNode(item) {
       let edge = !item.edgeType
         ? this.edges.find(e => {
