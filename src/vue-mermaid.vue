@@ -26,6 +26,10 @@ export default {
       default() {
         return { theme: "default", startOnLoad: false };
       }
+    },
+    stopOnError: {
+      type: Boolean,
+      default: false
     }
   },
   data: function() {
@@ -195,7 +199,14 @@ export default {
             document.createTextNode(code),
             container.firstChild
           );
-          mermaid.init(code, container);
+          try {
+            mermaid.init(code, container);
+          } catch (error) {
+            if(this.stopOnError) {
+              throw error;
+            }
+          }
+          
         }
       }
     },

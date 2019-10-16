@@ -1,7 +1,7 @@
 {
   "name": "vue-mermaid",
   "description": "flowchart of mermaid with vue componet",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "main": "dist/vue-mermaid.js",
   "author": "mark_tun <yuguang.liu@foxmail.com>",
   "contributors": [
