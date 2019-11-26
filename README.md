@@ -108,6 +108,32 @@ export default {
 
 ![Group](./img/group.png)
 
+### Theme
+
+- To change theme, you can pass in a config object, for available themes, you can refer to [mermaidjs themes](https://github.com/mermaid-js/mermaid/tree/master/src/themes)
+
+```vue
+<template>
+  <vue-mermaid
+    type="graph LR"
+    :config="config"
+  ></vue-mermaid>
+</template>
+```
+
+```js
+export default {
+  data: function() {
+    return {
+      config: {
+        theme: 'neutral'
+      }
+    };
+  }
+};
+```
+
+
 ## Build Setup
 
 ```bash
