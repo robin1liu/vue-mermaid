@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+### 0.0.11
+
+- Upgrade mermaid version
+- Fix default config issues
+
+### 0.0.10
+
+- Add exception catch of parse
+
 ### 0.0.9
 
 - Add subgraphs support
