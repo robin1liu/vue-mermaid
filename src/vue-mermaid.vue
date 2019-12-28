@@ -24,7 +24,13 @@ export default {
     config: {
       type: Object,
       default() {
-        return { theme: "default", startOnLoad: false };
+        return {};
+      }
+    },
+    defaultConfig: {
+      type: Object,
+      default() {
+        return { theme: "default", startOnLoad: false, securityLevel: 'loose' };
       }
     },
     stopOnError: {
@@ -188,7 +194,7 @@ export default {
       window.mermaidClick = function(id) {
         _t.edit(id);
       };
-      mermaid.initialize(this.config);
+      mermaid.initialize(Object.assign(this.defaultConfig, this.config));
     },
     load(code) {
       if (code) {
