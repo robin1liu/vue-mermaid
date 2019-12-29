@@ -56,7 +56,7 @@ export default {
 ```
 #### Different link values of next:
 
-```json
+```vue
 nodes: [
         {
           id: "1",
