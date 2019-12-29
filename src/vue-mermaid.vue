@@ -1,5 +1,5 @@
 <template>
-  <div id="mermaid" class="mermaid">{{parseCode}}</div>
+  <div id="mermaid" class="mermaid">{{ parseCode }}</div>
 </template>
 
 <script>
@@ -30,7 +30,7 @@ export default {
     defaultConfig: {
       type: Object,
       default() {
-        return { theme: "default", startOnLoad: false, securityLevel: 'loose' };
+        return { theme: "default", startOnLoad: false, securityLevel: "loose" };
       }
     },
     stopOnError: {
@@ -146,11 +146,12 @@ export default {
           .map(item => {
             if (item.next && item.next.length > 0) {
               return item.next
-                .map(n => {
+                .map((n, index) => {
                   const next = this.nodeObject[n] || this.nodeObject[n.id];
                   if (next != null && typeof next != "undefined") {
                     return `${this.buildNode(item)}${this.buildLink(
-                      item
+                      item,
+                      index
                     )}${this.buildNode(next)}`;
                   } else {
                     //TODO error
@@ -183,8 +184,17 @@ export default {
           });
       return `${item.id}${edge.open}${item.text}${edge.close}`;
     },
-    buildLink(item) {
-      return item.link ? item.link : "-->";
+    buildLink(item, index) {
+      const link = "-->";
+      if (item.link) {
+        if (Array.isArray(item.link)) {
+          if (item.link.length > index) return item.link[index];
+          else return item.link[item.link.length - 1];
+        } else {
+          return item.link;
+        }
+      }
+      return link;
     },
     loadNodes() {
       this.load(this.parseCode);
@@ -208,11 +218,10 @@ export default {
           try {
             mermaid.init(code, container);
           } catch (error) {
-            if(this.stopOnError) {
+            if (this.stopOnError) {
               throw error;
             }
           }
-          
         }
       }
     },
@@ -223,5 +232,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

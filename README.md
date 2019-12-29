@@ -54,6 +54,23 @@ export default {
   }
 };
 ```
+#### Different link values of next:
+
+```json
+nodes: [
+        {
+          id: "1",
+          text: "A",
+          link: ["-- yes -->", "-- no -->"],
+          next: ["2", "3"],
+          editable: true
+        },
+        { id: "2", text: "B" },
+        { id: "3", text: "C"}
+      ],
+```
+
+![links](./img/links.jpg)
 
 #### Possible edgeType values:
 
