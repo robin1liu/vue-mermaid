@@ -171,6 +171,13 @@ export default {
             return `click ${item.id} mermaidClick`;
           })
           .join("\n") +
+        "\n" +
+        nodes
+          .filter(item => item.url)
+          .map(item => {
+            return `click ${item.id} "${item.url}"`;
+          })
+          .join("\n") +
         "\n"
       );
     },
