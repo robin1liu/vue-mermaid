@@ -37,7 +37,7 @@ export default {
           link: "---",
           next: ["2"],
           editable: true,
-          style: "fill:#f9f,stroke:#333,stroke-width:4px"
+          style: "fill:#f9f,stroke:#333,stroke-width:4px",
         },
         { id: "2", text: "B", edgeType: "circle", next: ["3"] },
         { id: "3", text: "C", next: ["4", "6"] },
@@ -62,6 +62,8 @@ nodes: [
           id: "1",
           text: "A",
           link: ["-- yes -->", "-- no -->"],
+          linkNumber: 1,
+          linkStyle: "fill:none,stroke:red,stroke-width:1px;",
           next: ["2", "3"],
           editable: true
         },
@@ -70,7 +72,7 @@ nodes: [
       ],
 ```
 
-![links](./img/links.jpg)
+![links](./img/links.png)
 
 #### Possible edgeType values:
 
@@ -116,7 +118,7 @@ export default {
           group: "two"
         },
         { id: "5", text: "E", group: "three" },
-        { id: "6", text: "F", group: "three" }
+        { id: "6", text: "F", group: "three", , url: "http://www.github.com" }
       ]
     };
   }
