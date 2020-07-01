@@ -69,7 +69,15 @@ export default {
       const nodeStyles = nodes
         .filter(node => node.style)
         .map(node => `style ${node.id} ${node.style}`);
-      return nodeStyles.concat(styles);
+      const nodeLinkStyles = nodes
+        .filter(node => node.linkStyle)
+        .map(
+          node =>
+            `linkStyle ${node.linkNumber || nodes.indexOf(node)} ${
+              node.linkStyle
+            }`
+        )
+      return nodeStyles.concat(styles).concat(nodeLinkStyles)
     },
     parseCode() {
       const { nodes } = this;
