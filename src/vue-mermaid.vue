@@ -115,7 +115,8 @@ export default {
                 innerNodes.push({
                   id: node.id,
                   text: node.text,
-                  style: node.style
+                  style: node.style,
+                  editable: node.editable
                 });
                 node.next.forEach(id => {
                   if (nids.has(id)) {
