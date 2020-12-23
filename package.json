@@ -1,8 +1,10 @@
 {
   "name": "vue-mermaid",
   "description": "flowchart of mermaid with vue componet",
-  "version": "0.0.13",
-  "main": "dist/vue-mermaid.js",
+  "version": "0.0.14",
+  "main": "dist/vue-mermaid.umd.js",
+  "module": "dist/vue-mermaid.esm.js",
+  "unpkg": "dist/vue-mermaid.min.js",
   "author": "mark_tun <yuguang.liu@foxmail.com>",
   "contributors": [
     "Filipe Pinheiro <filipemcpinheiro@gmail.com>"
@@ -19,7 +21,10 @@
     "flowchart"
   ],
   "scripts": {
-    "build": "rollup -c"
+    "build": "npm run build:umd & npm run build:es & npm run build:unpkg",
+    "build:umd": "rollup --config rollup.config.js --format umd --file dist/vue-mermaid.umd.js",
+    "build:es": "rollup --config rollup.config.js --format es --file dist/vue-mermaid.esm.js",
+    "build:unpkg": "rollup --config rollup.config.js --format iife --file dist/vue-mermaid.min.js"
   },
   "repository": {
     "type": "git",
