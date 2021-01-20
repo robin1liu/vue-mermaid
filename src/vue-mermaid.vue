@@ -50,10 +50,10 @@ export default {
         { type: "asymetric", open: ">", close: "]" },
         { type: "rhombus", open: "{", close: "}" },
         { type: "hexagon", open: "{{", close: "}}" },
-        { type: "parallelogram", open: "[/", close: "/]" 
-        { type: "parallelogram_alt", open: "[\", close: "\]" 
-        { type: "trapezoid", open: "[/", close: "\]" },
-        { type: "trapezoid_alt", open: "[\", close: "/]" }, 
+        { type: "parallelogram", open: "[/", close: "/]" },
+        { type: "parallelogram_alt", open: "[\\", close: "\\]" },
+        { type: "trapezoid", open: "[/", close: "\\]" },
+        { type: "trapezoid_alt", open: "[\\", close: "/]" },
       ]
     };
   },
