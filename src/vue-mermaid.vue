@@ -43,9 +43,17 @@ export default {
       edges: [
         { type: "default", open: "[", close: "]" },
         { type: "round", open: "(", close: ")" },
+        { type: "stadium", open: "([", close: "])" },
+        { type: "subroutine", open: "[[", close: "]]" },
+        { type: "cylindrical", open: "[(", close: ")]" },
         { type: "circle", open: "((", close: "))" },
         { type: "asymetric", open: ">", close: "]" },
-        { type: "rhombus", open: "{", close: "}" }
+        { type: "rhombus", open: "{", close: "}" },
+        { type: "hexagon", open: "{{", close: "}}" },
+        { type: "parallelogram", open: "[/", close: "/]" },
+        { type: "parallelogram_alt", open: "[\\", close: "\\]" },
+        { type: "trapezoid", open: "[/", close: "\\]" },
+        { type: "trapezoid_alt", open: "[\\", close: "/]" },
       ]
     };
   },
