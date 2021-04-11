@@ -1,7 +1,7 @@
 {
   "name": "vue-mermaid",
   "description": "flowchart of mermaid with vue componet",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "main": "dist/vue-mermaid.umd.js",
   "module": "dist/vue-mermaid.esm.js",
   "unpkg": "dist/vue-mermaid.min.js",
